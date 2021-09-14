@@ -12,12 +12,24 @@ Create a text post
 
 <form method="POST">
 
-    <textarea name="text" id="text" class="form-control"> </textarea>
-        <br>
-        <div align='center'>
-            <button type='submit' class="btn btn-lg btn-primary">Post</button>
-        </div>
+    <label for="email">Post title</label>
+    <input type="text" id="title" name="title" class="form-control" placeholder="Your title"/>
 
+    <br>
+
+    <label for="email">Post content</label>
+    <textarea placeholder="Content of your post" name="text" id="text" class="form-control" ></textarea>
+
+    <br>
+        
+    <div align='center'>
+
+        <button class="btn btn-primary" type="submit">Post Text</button>
+        <a href="/image-post" class="btn btn-primary btn-"  role="button" aria-disabled="true">Post image</a>
+
+    </div>
+        
+        
    
 
 </form>

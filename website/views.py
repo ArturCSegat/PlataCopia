@@ -23,13 +23,15 @@ def home():
 @login_required
 def create_post():
     if request.method == 'POST':
+        
+        title = request.form.get('title')
         text = request.form.get('text')
 
         if not text:
             flash('Post cannot be empty', category='error')
 
         else:
-            new_post = Post(text=str(text), author=current_user.id)
+            new_post = Post(text=str(text), author=current_user.id, title=title)
 
             db.session.add(new_post)
             db.session.commit()
@@ -38,6 +40,28 @@ def create_post():
             return redirect(url_for('views.home'))
 
     return render_template('create-post.html', user=current_user)
+
+@views.route('/image-post', methods =['GET', 'POST'])
+@login_required
+def create_image_post():
+    if request.method == 'POST':
+
+        title = request.form.get('title')
+        text = request.form.get('link')
+
+        if not text:
+            flash('Post cannot be empty', category='error')
+
+        else:
+            new_post = ImagePost(text=str(text), author=current_user.id, title=title)
+
+            db.session.add(new_post)
+            db.session.commit()
+
+            flash('Post posted', category='success')
+            return redirect(url_for('views.home'))
+
+    return render_template('image-post.html', user=current_user)
 
 @views.route('/delete-post/<id>')
 @login_required
@@ -89,25 +113,7 @@ def user_profile(username):
     images = ImagePost.query.filter_by(author=user.id).all()
     return render_template("posts.html", user=current_user, posts=posts, images=images, username=username)
 
-@views.route('/image-post', methods =['GET', 'POST'])
-@login_required
-def create_image_post():
-    if request.method == 'POST':
-        text = request.form.get('link')
 
-        if not text:
-            flash('Post cannot be empty', category='error')
-
-        else:
-            new_post = ImagePost(text=str(text), author=current_user.id)
-
-            db.session.add(new_post)
-            db.session.commit()
-
-            flash('Post posted', category='success')
-            return redirect(url_for('views.home'))
-
-    return render_template('image-post.html', user=current_user)
 
 @views.route('/post-type')
 @login_required
