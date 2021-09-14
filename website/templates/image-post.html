@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} Image Post {% endblock %}
+
+{% block content %}
+
+<form method="POST">
+    <div class="form-group">
+        <label for="email">Image Link</label>
+        <input type="text" id="link" name="link" class="form-control" placeholder="Enter the image link"/>
+    </div>
+
+    <div align="center"><button class="btn btn-primary" type="submit">Post Image</button></div>
+</form>
+
+{% endblock %}
