@@ -22,7 +22,7 @@ class Post(db.Model):
     text = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
-    parent = db.Column(db.Integer, db.ForeignKey('room.id', ondelete='CASCADE'), nullable=False, default=1)
+    parent = db.Column(db.Integer, db.ForeignKey('room.id', ondelete='CASCADE'), nullable=False)
 
 class ImagePost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,7 +31,7 @@ class ImagePost(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     cp = db.Column(db.Text, default='default caption')
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
-    parent = db.Column(db.Integer, db.ForeignKey('room.id', ondelete='CASCADE'), nullable=False, default=1)
+    parent = db.Column(db.Integer, db.ForeignKey('room.id', ondelete='CASCADE'), nullable=False)
     
 
 class Room(db.Model):

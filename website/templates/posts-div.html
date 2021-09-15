@@ -3,13 +3,17 @@
 
 {% block content %} 
 
-<h1 align='center'>{% block header %}{% endblock %}</h1>
-
-
+    <h1 align='center'>{% block header %}{% endblock %}</h1>   
 
 {% block info %}
 <h2>Info about post</h2>
 Fuck no info
+{% endblock %}
+
+<br>
+
+{% block participate %}
+<a href="/create-post/{{current_room}}" class="btn btn-primary btn-"  role="button" aria-disabled="true">Participate in room</a>
 {% endblock %}
 
 <br>

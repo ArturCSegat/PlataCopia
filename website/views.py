@@ -44,9 +44,9 @@ def create_room():
 
     return render_template('create-room.html', user=current_user)
 
-@views.route('/create-post', methods =['GET', 'POST'])
+@views.route('/create-post/<current_room>', methods =['GET', 'POST'])
 @login_required
-def create_post():
+def create_post(current_room):
     if request.method == 'POST':
         
         title = request.form.get('title')
@@ -56,19 +56,19 @@ def create_post():
             flash('Post cannot be empty', category='error')
 
         else:
-            new_post = Post(text=str(text), author=current_user.id, title=title, )
+            new_post = Post(text=str(text), author=current_user.id, title=title, parent=current_room)
 
             db.session.add(new_post)
             db.session.commit()
 
             flash('Post posted', category='success')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('views.room_content', room=current_room))
 
-    return render_template('create-post.html', user=current_user)
+    return render_template('create-post.html', user=current_user, current_room=current_room)
 
-@views.route('/image-post', methods =['GET', 'POST'])
+@views.route('/image-post/<current_room>', methods =['GET', 'POST'])
 @login_required
-def create_image_post():
+def create_image_post(current_room):
     if request.method == 'POST':
 
         title = request.form.get('title')
@@ -80,51 +80,53 @@ def create_image_post():
 
         else:
             if caption != "default caption":
-                new_post = ImagePost(img=link, author=current_user.id, title=title, cp=caption)
+                new_post = ImagePost(img=link, author=current_user.id, title=title, cp=caption, parent=current_room)
             else:
-                new_post = ImagePost(img=link, author= current_user, title=title)
+                new_post = ImagePost(img=link, author= current_user, title=title, parent=current_room)
 
             db.session.add(new_post)
             db.session.commit()
 
             flash('Post posted', category='success')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('views.room_content', room=current_room))
 
-    return render_template('image-post.html', user=current_user)
+    return render_template('image-post.html', user=current_user, current_room=current_room)
 
 @views.route('/delete-post/<id>')
 @login_required
 def delete_post(id):
     post = Post.query.filter_by(id=id).first()
-   
+    current_room = post.parent
+
     if not post:
         flash("This post does not exist", category='error')
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.room_content', room=current_room))
     elif current_user.id != post.author:
         flash("You cannot delete someone elses's post", category='error')
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.room_content', room=current_room))
     else:
         db.session.delete(post)
         db.session.commit()
         flash('post deleted successfuly', category='success')
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.room_content', room=current_room))
 
 @views.route('/delete-image/<id>')
 @login_required
 def delete_image(id):
     image = ImagePost.query.filter_by(id=id).first()
+    current_room = image.parent
    
     if not image:
         flash("This post does not exist", category='error')
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.room_content', room=current_room))
     elif current_user.id != image.author:
         flash("You cannot delete someone elses's post", category='error')
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.room_content', room=current_room))
     else:
         db.session.delete(image)
         db.session.commit()
         flash('Post deleted successfuly', category='success')
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.room_content', room=current_room))
 
 @views.route('/delete-room/<id>')
 @login_required
@@ -189,6 +191,6 @@ def room_content(room):
 
 
 
-    return render_template("room-content.html", user=current_user, posts=posts, images=images, username=current_room.title, info =current_room.info)
+    return render_template("room-content.html", user=current_user, posts=posts, images=images, username=current_room.title, info =current_room.info, current_room=current_room.id)
 
 
