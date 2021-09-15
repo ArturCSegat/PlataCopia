@@ -176,6 +176,8 @@ def user_profile_rooms(username):
 @login_required
 def room_content(room):
 
+    room = int(room)
+    
     current_room = Room.query.filter_by(id=room).first()
 
     if not current_room:
@@ -187,6 +189,6 @@ def room_content(room):
 
 
 
-    return render_template("posts.html", user=current_user, posts=posts, images=images, username=current_room.title)
+    return render_template("room-content.html", user=current_user, posts=posts, images=images, username=current_room.title, info =current_room.info)
 
 
