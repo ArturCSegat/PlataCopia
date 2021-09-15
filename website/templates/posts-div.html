@@ -46,8 +46,19 @@
         
         </div>
         <div class='card-body'>
+
             <div class="card-subtitle"><a href="/posts/{{image.user.username}}">{{image.user.username}}</a></div>
-            <div class='card-text'><img src={{image.text}} alt='Image Post', style="max-width:500px;max-height:500px;"></div>
+
+            <div class='card-text'>
+
+                <img src={{image.img}} alt='Image Post', style="max-width:500px;max-height:500px;">
+            
+                <br>    
+
+                {% if image.cp != "default caption" %} {{image.cp}} {% endif %}
+
+            </div>
+
         </div>
         <div class="card-footer text-muted">{{image.date_created}}</div>
     </div>
