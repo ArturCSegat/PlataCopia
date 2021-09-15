@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title  %} Create a Room{% endblock %}
+
+
+{%  block content  %}
+
+<h1 align='center'>Create a room</h1>
+
+<form method="POST">
+    <div class="form-group">
+        
+        <label for="email">Room title</label>
+        <input type="text" id="title" name="title" class="form-control" placeholder="Your title"/>
+        
+        <br>
+
+        <label for="email">Room description</label>
+        <textarea type="text" id="info" name="info" class="form-control" placeholder="Enter the image link" placeholder='Write about the room '></textarea>
+
+    </div>
+
+    <br>    
+
+    <div align="center">
+        <button class="btn btn-primary" type="submit">Create room</button>
+    </div>
+</form>
+
+
+{% endblock %}

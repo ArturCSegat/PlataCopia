@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %} 
+
+<h1 align='center'>{% block header %} Rooms {% endblock %}</h1>
+
+<div id='rooms'>
+    {% for room in rooms %}  
+
+    <div class="card border-dark">
+        <div class='card-header d-flex justify-content-between align-items-center'>
+            <h3>{{room.title}}</h3>
+            <div class="btn-group">
+                <button type='button' class='btn btn-sm btn-primary dropdown-toggle' data-bs-toggle='dropdown'></button>
+                <ul class='dropdown-menu'>
+                    <li><a href="/content/{{room.id}}" class="dropdown-item">Join</a></li>
+                    {% if current_user.id == room.user.id %}
+                    <li><a href="/delete-room/{{room.id}}" class="dropdown-item">Delete</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        
+        </div>
+        <div class='card-body'>
+            <div class="card-subtitle"><a href="/rooms/{{room.user.username}}">{{room.user.username}}</a></div>
+            <div class='card-text'>{{room.info}}</div>
+        </div>
+        <div class="card-footer text-muted">{{room.date_created}}</div>
+    </div>
+    <br>
+    {% endfor %}
+
+    
+</div>
+
+{% endblock %}
