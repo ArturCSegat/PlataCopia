@@ -13,31 +13,37 @@
     <title>{% block title %}{% endblock %}</title>
 
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbar">      
+<body style="background-color: #282C34; color:silver;">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#21252B; border-bottom:1px solid; border-color: #373840;">
+      <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"><span class="navbar-toggler-icon""></span></button>
+          <a class="navbar-brand" href="/home"><img src="https://cdn.discordapp.com/attachments/853971257087361047/887424717672292392/logo.png"></a>
+          <div class="collapse navbar-collapse" id="navbar">      
 
-                <div class="navbar-nav">
-                <a class="nav-item nav-link" href="/home">Home</a>
+              <div class="navbar-nav gap-2 me-auto mb-2 mb-lg-0">
+              {% if user.is_authenticated %}
+                  <a class="btn btn-outline-light btn-sm" href="/create-room" role="button" style="max-width: 145px;">Create Room</Ri:a></a>
+                  <a class="btn btn-outline-light btn-sm" href="/home" role="button" style="max-width: 145px;">Home</a>                
+              {% endif %}
+              </div>
+              <div class="navbar-nav">
                 {% if user.is_authenticated %}
-                    
-                    <a class="nav-item nav-link" href="/logout">Logout</a>
-                    <a class="nav-item nav-link" href="/create-room">Create a room</a>
-                    <a class="nav-item nav-link" href="/posts/{{user.username}}">Logged in as {{user.username}}</a>
-                    {% else %}
-                    <a class="nav-item nav-link" href="/login">Login</a>
-                    <a class="nav-item nav-link" href="/signup">Sign Up</a>
-                    {% endif %}
-                    
+                <div class="btn-group">
+                  <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">Signed in as {{user.username}}</button>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                    <li><a class="dropdown-item" href="/posts/{{user.username}}">My Posts</a></li>
+                    <li><a class="dropdown-item" href="/logout">Log out</a></li>
+                  </ul>
                 </div>
-                
-                
-
-            </div>
-        </div>
-    </nav>
+                </ul>
+                {% else %}
+                    <a class="nav-link" style="color:silver; display:flex; align-items:right">Not currently signed in.</a>
+                {% endif %}
+              </div>
+          </div>
+      </div>
+  </nav>
     {% with messages = get_flashed_messages(with_categories=True) %}
       {% if messages %}
         {% for category, message in messages %}

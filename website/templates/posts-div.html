@@ -5,22 +5,23 @@
 
     <h1 align='center'>{% block header %}{% endblock %}</h1>   
 
-{% block info %}{% endblock %}
-
-
-<div>
+{% block info %}
+<h2>troll</h2>
+No description given.
 <br>
-    {% block participate %}
-    <a href="/create-post/{{current_room}}" class="btn btn-primary btn-"  role="button" aria-disabled="true">Participate in room</a>
-    {% endblock %}
-</div>
+{% endblock %}
 
+<br>
+
+{% block participate %}
+<a href="/create-post/{{current_room}}" class="btn btn-outline-success"  role="button" aria-disabled="true">Create Post Here</a>
+{% endblock %}
 <div id='posts'>
     {% for post in posts %}  
-    <br>
+
     <div class="card border-dark">
         <div class='card-header d-flex justify-content-between align-items-center'>
-            <h4><a href="/posts/{{post.user.username}}" style="text-decoration: none;">{{post.user.username}}</a></h4>
+            <h3>{{post.title}}</h3>
             <div class="btn-group">
                 <button type='button' class='btn btn-sm btn-primary dropdown-toggle' data-bs-toggle='dropdown'></button>
                 <ul class='dropdown-menu'>
@@ -32,6 +33,7 @@
         
         </div>
         <div class='card-body'>
+            <div class="card-subtitle"><a href="/posts/{{post.user.username}}">{{post.user.username}}</a></div>
             <div class='card-text'>{{post.text}}</div>
         </div>
         <div class="card-footer text-muted">{{post.date_created}}</div>

@@ -3,17 +3,20 @@
 {% block content %}
 
 <form method="POST">
-    <h3 align="center">Login</h3>
-
-    <div class="form-group">
-        <label for="email">Email Adress</label>
-        <input type="text" id="email" name="email" class="form-control" placeholder="Enter your Email"/>
-
-        <label for="email">PassWord</label>
-        <input type="password" id="password1" name="password1" class="form-control" placeholder="Enter your PassWord"/>
-        <br>
-        <div align="center"><button class="btn btn-primary" type="submit">Login</button></div>
+<body style="background-color: #282C34;">
+    <div class=container style="max-width:350px; margin-top:17%; background-color: #21252B; border-radius: 5px; color:silver; border:1px solid; border-color: #373840;">
+        <div class="form-group" style="padding: 15px;">
+            <h3 align="center">Login</h3>
+            <label for="email">Email Address</label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="Enter your Email" style="background-color: #282C34; border-color: #454651; color:silver;"/>
+    
+            <label for="email">Password</label>
+            <input type="password" id="password1" name="password1" class="form-control" placeholder="Enter your Password" style="background-color: #282C34; border-color: #454651; color:silver;"/>
+            <br>
+            <div align="center"><button class="btn btn-outline-success" type="submit">Sign in</button></div>
+        </div>
     </div>
+</body>
 </form>
 
 {% endblock %}
