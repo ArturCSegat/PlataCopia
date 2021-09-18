@@ -15,6 +15,9 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='user', passive_deletes=True)
     IMGposts = db.relationship('ImagePost', backref='user', passive_deletes=True)
     rooms =  db.relationship('Room', backref='user', passive_deletes=True)
+    is_teacher = db.Column(db.Boolean, default=False)
+
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

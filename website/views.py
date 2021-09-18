@@ -196,10 +196,21 @@ def room_content(room):
             part = User.query.filter_by(id=post.author).first()
             participants.append(part.username)
         for image in images:
-            part = User.query.filter_by(id=image.author).first()
-            participants.append(part.username)
+            if part.username not in participants:
+                part = User.query.filter_by(id=image.author).first()
+            if part.username not in participants:
+                participants.append(part.username)
 
 
-    return render_template("room-content.html", user=current_user, posts=posts, images=images, username=current_room.title, info =current_room.info, current_room=current_room.id, participants=participants)
+    return render_template("room-content.html", user=current_user, posts=posts, images=images, username=current_room.title, info =current_room.info, current_room=current_room.id, participants=participants, room_author=current_room.user.username)
 
+@views.route('/become-teacher')
+@login_required
+def studentToTeacher():
+    user = User.query.filter_by(id=current_user.id).first()
+    
+    user.is_teacher = True
+    db.session.commit()
+    flash("You have successfuly become a teacher", category='success')
+    return redirect(url_for('views.home'))
 
