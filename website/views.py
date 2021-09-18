@@ -56,7 +56,7 @@ def create_post(current_room):
             flash('Post cannot be empty', category='error')
 
         else:
-            new_post = Post(text=str(text), author=current_user.id, title=title, parent=current_room)
+            new_post = Post(text=str(text), author=current_user.id, parent=current_room)
 
             db.session.add(new_post)
             db.session.commit()
@@ -80,9 +80,9 @@ def create_image_post(current_room):
 
         else:
             if caption != "default caption":
-                new_post = ImagePost(img=link, author=current_user.id, title=title, cp=caption, parent=current_room)
+                new_post = ImagePost(img=link, author=current_user.id, cp=caption, parent=current_room)
             else:
-                new_post = ImagePost(img=link, author= current_user, title=title, parent=current_room)
+                new_post = ImagePost(img=link, author= current_user, parent=current_room)
 
             db.session.add(new_post)
             db.session.commit()
@@ -180,17 +180,26 @@ def room_content(room):
 
     room = int(room)
     
+
+
     current_room = Room.query.filter_by(id=room).first()
 
     if not current_room:
          flash('This room does no exist', category='error')
     else:
 
+        participants = []
         images = ImagePost.query.filter_by(parent=current_room.id).all()
         posts = Post.query.filter_by(parent=current_room.id).all()
 
+        for post in posts:
+            part = User.query.filter_by(id=post.author).first()
+            participants.append(part.username)
+        for image in images:
+            part = User.query.filter_by(id=image.author).first()
+            participants.append(part.username)
 
 
-    return render_template("room-content.html", user=current_user, posts=posts, images=images, username=current_room.title, info =current_room.info, current_room=current_room.id)
+    return render_template("room-content.html", user=current_user, posts=posts, images=images, username=current_room.title, info =current_room.info, current_room=current_room.id, participants=participants)
 
 

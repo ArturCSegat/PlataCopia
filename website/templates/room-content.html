@@ -17,4 +17,14 @@
 
 <br>
 {% endblock %}
+
+{% block aditional %}
+    <h4>Participants in this room</h4>
+    <ul>
+        {% for part in participants %}
+        <li><a href="/posts/{{part}}">{{part}}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
         
