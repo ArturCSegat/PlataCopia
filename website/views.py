@@ -194,10 +194,11 @@ def room_content(room):
 
         for post in posts:
             part = User.query.filter_by(id=post.author).first()
-            participants.append(part.username)
-        for image in images:
             if part.username not in participants:
-                part = User.query.filter_by(id=image.author).first()
+                participants.append(part.username)
+
+        for image in images:
+            part = User.query.filter_by(id=image.author).first()
             if part.username not in participants:
                 participants.append(part.username)
 

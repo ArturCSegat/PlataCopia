@@ -4,88 +4,99 @@
 {% block content %} 
 
     <h1 align='center'>{% block header %}{% endblock %}</h1>   
+<div class='container'>
+    <div class='row'>
+           
+        <div class="col-sm">
+            <div>
+            <br>
+                {% block participate %}
+                <a href="/create-post/{{current_room}}" class="btn btn-primary btn-"  role="button" aria-disabled="true">Participate in room</a>
+                {% endblock %}
+                <br>
+            </div>
 
-{% block info %}
-<h2>troll</h2>
-No description given.
+            <div id='posts'>
+                {% for post in posts %}  
+                <br>
+                <div class="card" style="border-radius: 5px; border-color:#A22B2D;">
+                    <div class='card-header d-flex justify-content-between align-items-center' style="background-color:#282C34;">
+                        {% if post.user.is_teacher == True %}
+                            <div><a style="color:#A22B2D" href="/rooms/{{post.user.username}}">{{post.user.username}} - TEACHER</a></div>
+                        {% else %}
+                            <div><a style="color:#A22B2D" href="/posts/{{post.user.username}}">{{post.user.username}}</a></div>            
+                        {% endif %}
+                        <div class="btn-group">
+                            <button type='button' class='btn btn-sm btn-outline-light dropdown-toggle' data-bs-toggle='dropdown'></button>
+                            <ul class='dropdown-menu'>
+                                {% if current_user.id == post.user.id %}
+                                <li><a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    
+                    </div>
+                    <div class='card-body' style="background-color: #21252B; border-top: 1px solid #A22B2D; border-bottom: 1px solid #A22B2D">
+                        <div class='card-text'>{{post.text}}</div>
+                    </div>
+                    <div class="card-footer text-muted" style="background-color:#282C34;">{{post.date_created}}</div>
+                </div>
+                <br>
+                {% endfor %}
+
+                {% for post in images %}  
+
+                <br>
+                <div class="card" style="border-radius: 5px; border-color:#A22B2D;">
+                    <div class='card-header d-flex justify-content-between align-items-center' style="background-color:#282C34;">
+                        {% if post.user.is_teacher == True %}
+                            <div><a style="color:#A22B2D" href="/rooms/{{post.user.username}}">{{post.user.username}} - TEACHER</a></div>
+                        {% else %}
+                            <div><a style="color:#A22B2D" href="/posts/{{post.user.username}}">{{post.user.username}}</a></div>            
+                        {% endif %}
+                        <div class="btn-group">
+                            <button type='button' class='btn btn-sm btn-outline-light dropdown-toggle' data-bs-toggle='dropdown'></button>
+                            <ul class='dropdown-menu'>
+                                {% if current_user.id == post.user.id %}
+                                <li><a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    
+                    </div>
+                    <div class='card-body' style="background-color: #21252B; border-top: 1px solid #A22B2D; border-bottom: 1px solid #A22B2D">
+                        <div class='card-text'>
+
+                            <img src={{post.img}} alt='Image Post', style="max-width:500px;max-height:500px;">
+                        
+                            <br>    
+
+                            {% if post.cp != "default caption" %} {{post.cp}} {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted" style="background-color:#282C34;">{{post.date_created}}</div>
+                </div>
+
+                {% endfor %}
+            </div>             
+        </div>
+      
+    
+
 <br>
-{% endblock %}
 
-
-<div>
-<br>
-    {% block participate %}
-    <a href="/create-post/{{current_room}}" class="btn btn-primary btn-"  role="button" aria-disabled="true">Participate in room</a>
-    {% endblock %}
-    <br>
+        <div class="col-sm">
+                {% block info %}
+                <h2>troll</h2>
+                No description given.
+                <br>
+                {% endblock %}
+                {% block aditional %}{% endblock %}
+        </div>
+    </div>
 </div>
 
-<div id='posts'>
-    {% for post in posts %}  
-    <br>
-    <div class="card" style="border-radius: 5px; border-color:#A22B2D;">
-        <div class='card-header d-flex justify-content-between align-items-center' style="background-color:#282C34;">
-            {% if post.user.is_teacher == True %}
-                <div><a style="color:#A22B2D" href="/rooms/{{post.user.username}}">{{post.user.username}} - TEACHER</a></div>
-            {% else %}
-                <div><a style="color:#A22B2D" href="/posts/{{post.user.username}}">{{post.user.username}}</a></div>            
-            {% endif %}
-            <div class="btn-group">
-                <button type='button' class='btn btn-sm btn-outline-light dropdown-toggle' data-bs-toggle='dropdown'></button>
-                <ul class='dropdown-menu'>
-                    {% if current_user.id == post.user.id %}
-                    <li><a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        
-        </div>
-        <div class='card-body' style="background-color: #21252B; border-top: 1px solid #A22B2D; border-bottom: 1px solid #A22B2D">
-            <div class='card-text'>{{post.text}}</div>
-        </div>
-        <div class="card-footer text-muted" style="background-color:#282C34;">{{post.date_created}}</div>
-    </div>
-    <br>
-    {% endfor %}
-
-    {% for post in images %}  
-
-    <br>
-    <div class="card" style="border-radius: 5px; border-color:#A22B2D;">
-        <div class='card-header d-flex justify-content-between align-items-center' style="background-color:#282C34;">
-            {% if post.user.is_teacher == True %}
-                <div><a style="color:#A22B2D" href="/rooms/{{post.user.username}}">{{post.user.username}} - TEACHER</a></div>
-            {% else %}
-                <div><a style="color:#A22B2D" href="/posts/{{post.user.username}}">{{post.user.username}}</a></div>            
-            {% endif %}
-            <div class="btn-group">
-                <button type='button' class='btn btn-sm btn-outline-light dropdown-toggle' data-bs-toggle='dropdown'></button>
-                <ul class='dropdown-menu'>
-                    {% if current_user.id == post.user.id %}
-                    <li><a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        
-        </div>
-        <div class='card-body' style="background-color: #21252B; border-top: 1px solid #A22B2D; border-bottom: 1px solid #A22B2D">
-            <div class='card-text'>
-
-                <img src={{post.img}} alt='Image Post', style="max-width:500px;max-height:500px;">
-            
-                <br>    
-
-                {% if post.cp != "default caption" %} {{post.cp}} {% endif %}
-
-            </div>
-        </div>
-        <div class="card-footer text-muted" style="background-color:#282C34;">{{post.date_created}}</div>
-    </div>
-
-    {% endfor %}
-</div>
-<br>
-{% block aditional %}{% endblock %}
 
 {% endblock %}
 
