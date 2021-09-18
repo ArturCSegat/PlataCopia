@@ -88,7 +88,7 @@ def create_image_post(current_room):
             db.session.commit()
 
             flash('Post posted', category='success')
-            return redirect(url_for('views.room_content', room=current_room))
+            return redirect(url_for('views.room_content', room=current_room, current_user=current_user))
 
     return render_template('image-post.html', user=current_user, current_room=current_room)
 
@@ -151,7 +151,8 @@ def delete_room(id):
 @views.route('/posts/<username>')
 @login_required
 def user_profile_posts(username):
-    user =User.query.filter_by(username=username).first()
+
+    user = User.query.filter_by(username=username).first()
 
     if not user:
         flash('This user does no exist', category='error')
@@ -159,7 +160,7 @@ def user_profile_posts(username):
 
     posts = Post.query.filter_by(author=user.id).all()
     images = ImagePost.query.filter_by(author=user.id).all()
-    return render_template("posts.html", user=current_user, posts=posts, images=images, username=username)
+    return render_template("posts.html", current_user=current_user, posts=posts, images=images, username=username, user=user)
 
 @views.route('/rooms/<username>')
 @login_required
@@ -215,3 +216,33 @@ def studentToTeacher():
     flash("You have successfuly become a teacher", category='success')
     return redirect(url_for('views.home'))
 
+@views.route('/carimb/<user>')
+@login_required
+def carimb(user):
+    user = User.query.filter_by(id=user).first()
+    
+    user.is_carimbed = True
+    db.session.commit()
+
+    flash("You have successfuly carimbed the student", category='error')
+    return redirect(url_for('views.user_profile_posts', username=user.username))
+
+@views.route('/change-pfp/<user>', methods =['GET', 'POST'])
+@login_required
+def pfpChange(user):
+    if request.method == 'POST':
+
+        user = User.query.filter_by(id=user).first()
+        pic = request.form.get('link')
+
+        if not pic:
+            flash('Image cannot be none', category='error')
+
+        else:
+            user.profile_pic = pic
+            db.session.commit()
+
+            flash('Profile picture changed with success', category='success')
+            return redirect(url_for('views.user_profile_posts', username=user.username))
+    else:
+        return render_template('change-pfp.html', user=current_user)

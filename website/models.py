@@ -16,6 +16,8 @@ class User(db.Model, UserMixin):
     IMGposts = db.relationship('ImagePost', backref='user', passive_deletes=True)
     rooms =  db.relationship('Room', backref='user', passive_deletes=True)
     is_teacher = db.Column(db.Boolean, default=False)
+    is_carimbed = db.Column(db.Boolean, default=False)
+    profile_pic = db.Column(db.Text, default='https://i.pinimg.com/474x/76/94/84/769484dafbe89bf2b8a22379658956c4.jpg')
 
 
 

@@ -4,6 +4,27 @@
 
 
 {% block header %} {{username}}'s Posts {% endblock %}
+{% block participate %}
+    {% if current_user.id == user.id %}
+        <a href="/change-pfp/{{user.id}}" class="btn btn-primary btn-"  role="button" aria-disabled="true">Change profile picture</a>
+    {% endif %}
+{% endblock %}
+    
+{% block info %}
+    <img src="{{user.profile_pic}}" style="max-height:200px;max-width:200cm;">
+    <br>
+{% endblock %}
 
-{% block participate %}{% endblock %}
-{% block info %}{% endblock %}
+{% block aditional %}
+    {% if current_user.is_teacher == True %}
+        
+        <a href="/carimb/{{user.id}}" class="btn btn-danger btn-"  role="button" aria-disabled="true">Carimb</a>
+    {% endif %}
+
+    {% if user.is_carimbed == True %}
+        Kk maluco tu é muito ruim kra, tomou krimbo
+    {% endif %}
+{% endblock %}
+
+
+

@@ -22,7 +22,11 @@
     <h4>Participants in this room</h4>
     <ul>
         {% for part in participants %}
-        <li><a style="color: #A22B2D;" href="/posts/{{part}}">{{part}}  {% if part == room_author %}- TEACHER{% endif %}</a></li>
+            {% if part == room_author %}
+                <li><a style="color: #A22B2D;" href="/rooms/{{part}}">{{part}} - TEACHER</a></li>
+            {% else %}
+                <li><a style="color: #A22B2D;" href="/posts/{{part}}">{{part}}</a></li>
+            {% endif %}
         {% endfor %}
     </ul>
 {% endblock %}

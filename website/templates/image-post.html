@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1 align='center'>Make a Post</h1>
+<h1 align='center'>{% block header %}Make a Post{% endblock %}</h1>
 
 <form method="POST">
     <div class="form-group">
@@ -12,17 +12,18 @@
         <input type="text" id="link" name="link" class="form-control" placeholder="Enter the image link"/>
 
         <br>
-
+        {% block caption %}
         <label for="email">Caption</label>
         <input type="text" id="text" name="text" class="form-control" placeholder="Captions for the image"/>
+        {% endblock %}
 
     </div>
 
     <br>    
 
     <div align="center">
-        <button class="btn btn-primary" type="submit">Post Image</button>
-        <a href="/create-post/{{current_room}}" class="btn btn-primary btn-"  role="button" aria-disabled="true">Post text only</a>
+        {% block imagebtn %}<button class="btn btn-primary" type="submit">Post Image</button>{% endblock %}
+        {% block textbtn %}<a href="/create-post/{{current_room}}" class="btn btn-primary btn-"  role="button" aria-disabled="true">Post text only</a>{% endblock %}
     </div>
 </form>
 
