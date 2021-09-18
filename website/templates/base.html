@@ -23,7 +23,9 @@
               <div class="navbar-nav gap-2 me-auto mb-2 mb-lg-0">
               {% if user.is_authenticated %}
                   <a class="btn btn-outline-light btn-sm" href="/create-room" role="button" style="max-width: 145px;">Create Room</Ri:a></a>
-                  <a class="btn btn-outline-light btn-sm" href="/home" role="button" style="max-width: 145px;">Home</a>                
+                  <a class="btn btn-outline-light btn-sm" href="/home" role="button" style="max-width: 145px;">Home</a>
+              {% else %}
+                  <a class="btn btn-outline-light btn-sm" href="/signup" role="button" style="max-width: 145px;">Dont have an account</a>
               {% endif %}
               </div>
               <div class="navbar-nav">
@@ -38,7 +40,7 @@
                 </div>
                 </ul>
                 {% else %}
-                    <a class="nav-link" style="color:silver; display:flex; align-items:right">Not currently signed in.</a>
+                    <a class="nav-link" style="color:silver; display:flex; align-items:right">Not currently signed in.</a>           
                 {% endif %}
               </div>
           </div>

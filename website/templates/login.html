@@ -1,22 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}Login{% endblock %}
 {% block content %}
-
 <form method="POST">
 <body style="background-color: #282C34;">
     <div class=container style="max-width:350px; margin-top:17%; background-color: #21252B; border-radius: 5px; color:silver; border:1px solid; border-color: #373840;">
         <div class="form-group" style="padding: 15px;">
-            <h3 align="center">Login</h3>
+            <h3 align="center">{% block header %}Login{% endblock %}</h3>
+
+            {% block username %}{% endblock %}
+
             <label for="email">Email Address</label>
             <input type="text" id="email" name="email" class="form-control" placeholder="Enter your Email" style="background-color: #282C34; border-color: #454651; color:silver;"/>
     
             <label for="email">Password</label>
             <input type="password" id="password1" name="password1" class="form-control" placeholder="Enter your Password" style="background-color: #282C34; border-color: #454651; color:silver;"/>
+
+            {% block passwordSU %}{% endblock %}
             <br>
             <div align="center"><button class="btn btn-outline-success" type="submit">Sign in</button></div>
         </div>
     </div>
 </body>
 </form>
-
 {% endblock %}
